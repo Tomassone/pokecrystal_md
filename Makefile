@@ -42,10 +42,10 @@ SHA1 := sha1sum
 endif
 
 RGBDS ?=
-RGBASM  ?= $(RGBDS)rgbasm
-RGBFIX  ?= $(RGBDS)rgbfix
-RGBGFX  ?= $(RGBDS)rgbgfx
-RGBLINK ?= $(RGBDS)rgblink
+RGBASM  ?= $(RGBDS)rgbds/rgbasm
+RGBFIX  ?= $(RGBDS)rgbds/rgbfix
+RGBGFX  ?= $(RGBDS)rgbds/rgbgfx
+RGBLINK ?= $(RGBDS)rgbds/rgblink
 
 RGBASMFLAGS  ?= -Weverything -Wtruncation=1
 RGBLINKFLAGS ?= -Weverything -Wtruncation=1
