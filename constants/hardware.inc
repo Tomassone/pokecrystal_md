@@ -188,9 +188,9 @@ def B_IF_VBLANK equ 0 ; 1 = VBlank interrupt is pending [r/w]
     def IF_STAT   equ 1 << B_IF_STAT
     def IF_VBLANK equ 1 << B_IF_VBLANK
 
-; -- AUD1SWEEP / NR10 ($FF10) -------------------------------------------------
+; -- AUD1SWEEP / NR10 ($FF20) -------------------------------------------------
 ; Audio channel 1 sweep
-def rAUD1SWEEP equ $FF10
+def rAUD1SWEEP equ $FF20
 
 def AUD1SWEEP_TIME equ %0_111_0000 ; how long between sweep iterations
                                    ; (in 128 Hz ticks, ~7.8 ms apart) [r/w]
@@ -202,9 +202,9 @@ def B_AUD1SWEEP_DIR equ 3 ; sweep direction [r/w]
 
 def AUD1SWEEP_SHIFT equ %00000_111 ; how much the period increases/decreases per iteration [r/w]
 
-; -- AUD1LEN / NR11 ($FF11) ---------------------------------------------------
+; -- AUD1LEN / NR11 ($FF22) ---------------------------------------------------
 ; Audio channel 1 length timer and duty cycle
-def rAUD1LEN equ $FF11
+def rAUD1LEN equ $FF22
 
 def AUD1LEN_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r/w]
     def AUD1LEN_DUTY_12_5 equ %00_000000 ; 12.5%
@@ -214,9 +214,9 @@ def AUD1LEN_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r
 
 def AUD1LEN_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
-; -- AUD1ENV / NR12 ($FF12) ---------------------------------------------------
+; -- AUD1ENV / NR12 ($FF21) ---------------------------------------------------
 ; Audio channel 1 volume and envelope
-def rAUD1ENV equ $FF12
+def rAUD1ENV equ $FF21
 
 def AUD1ENV_INIT_VOLUME equ %1111_0000 ; initial volume [r/w]
 
@@ -228,13 +228,13 @@ def B_AUD1ENV_DIR equ 3 ; direction of volume envelope [r/w]
 def AUD1ENV_PACE equ %00000_111 ; how long between envelope iterations
                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
-; -- AUD1LOW / NR13 ($FF13) ---------------------------------------------------
+; -- AUD1LOW / NR13 ($FF23) ---------------------------------------------------
 ; Audio channel 1 period (low 8 bits) [wo]
-def rAUD1LOW equ $FF13
+def rAUD1LOW equ $FF23
 
-; -- AUD1HIGH / NR14 ($FF14) --------------------------------------------------
+; -- AUD1HIGH / NR14 ($FF24) --------------------------------------------------
 ; Audio channel 1 period (high 3 bits) and control
-def rAUD1HIGH equ $FF14
+def rAUD1HIGH equ $FF24
 
 def B_AUD1HIGH_RESTART    equ 7 ; 1 = restart the channel [wo]
 def B_AUD1HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
@@ -246,9 +246,9 @@ def AUD1HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [
 
 ; -- $FF15 is unused ----------------------------------------------------------
 
-; -- AUD2LEN / NR21 ($FF16) ---------------------------------------------------
+; -- AUD2LEN / NR21 ($FF25) ---------------------------------------------------
 ; Audio channel 2 length timer and duty cycle
-def rAUD2LEN equ $FF16
+def rAUD2LEN equ $FF25
 
 def AUD2LEN_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r/w]
     def AUD2LEN_DUTY_12_5 equ %00_000000 ; 12.5%
@@ -258,9 +258,9 @@ def AUD2LEN_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r
 
 def AUD2LEN_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
-; -- AUD2ENV / NR22 ($FF17) ---------------------------------------------------
+; -- AUD2ENV / NR22 ($FF27) ---------------------------------------------------
 ; Audio channel 2 volume and envelope
-def rAUD2ENV equ $FF17
+def rAUD2ENV equ $FF27
 
 def AUD2ENV_INIT_VOLUME equ %1111_0000 ; initial volume [r/w]
 
@@ -272,13 +272,13 @@ def B_AUD2ENV_DIR equ 3 ; direction of volume envelope [r/w]
 def AUD2ENV_PACE equ %00000_111 ; how long between envelope iterations
                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
-; -- AUD2LOW / NR23 ($FF18) ---------------------------------------------------
+; -- AUD2LOW / NR23 ($FF28) ---------------------------------------------------
 ; Audio channel 2 period (low 8 bits) [wo]
-def rAUD2LOW equ $FF18
+def rAUD2LOW equ $FF28
 
-; -- AUD2HIGH / NR24 ($FF19) --------------------------------------------------
+; -- AUD2HIGH / NR24 ($FF29) --------------------------------------------------
 ; Audio channel 2 period (high 3 bits) and control
-def rAUD2HIGH equ $FF19
+def rAUD2HIGH equ $FF29
 
 def B_AUD2HIGH_RESTART    equ 7 ; 1 = restart the channel [wo]
 def B_AUD2HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
@@ -288,21 +288,21 @@ def B_AUD2HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
 
 def AUD2HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
 
-; -- AUD3ENA / NR30 ($FF1A) ---------------------------------------------------
+; -- AUD3ENA / NR30 ($FF2A) ---------------------------------------------------
 ; Audio channel 3 enable
-def rAUD3ENA equ $FF1A
+def rAUD3ENA equ $FF2A
 
 def B_AUD3ENA_ENABLE equ 7 ; 1 = channel is active [r/w]
     def AUD3ENA_OFF equ 0 << B_AUD3ENA_ENABLE
     def AUD3ENA_ON  equ 1 << B_AUD3ENA_ENABLE
 
-; -- AUD3LEN / NR31 ($FF1B) ---------------------------------------------------
+; -- AUD3LEN / NR31 ($FF2B) ---------------------------------------------------
 ; Audio channel 3 length timer [wo]
-def rAUD3LEN equ $FF1B
+def rAUD3LEN equ $FF2B
 
-; -- AUD3LEVEL / NR32 ($FF1C) -------------------------------------------------
+; -- AUD3LEVEL / NR32 ($FF2C) -------------------------------------------------
 ; Audio channel 3 volume
-def rAUD3LEVEL equ $FF1C
+def rAUD3LEVEL equ $FF2C
 
 def AUD3LEVEL_VOLUME equ %0_11_00000 ; volume level [r/w]
     def AUD3LEVEL_MUTE equ %0_00_00000 ; 0% (muted)
@@ -310,13 +310,13 @@ def AUD3LEVEL_VOLUME equ %0_11_00000 ; volume level [r/w]
     def AUD3LEVEL_50   equ %0_10_00000 ; 50%
     def AUD3LEVEL_25   equ %0_11_00000 ; 25%
 
-; -- AUD3LOW / NR33 ($FF1D) ---------------------------------------------------
+; -- AUD3LOW / NR33 ($FF2E) ---------------------------------------------------
 ; Audio channel 3 period (low 8 bits) [wo]
-def rAUD3LOW equ $FF1D
+def rAUD3LOW equ $FF2E
 
-; -- AUD3HIGH / NR34 ($FF1E) --------------------------------------------------
+; -- AUD3HIGH / NR34 ($FF2D) --------------------------------------------------
 ; Audio channel 3 period (high 3 bits) and control
-def rAUD3HIGH equ $FF1E
+def rAUD3HIGH equ $FF2D
 
 def B_AUD3HIGH_RESTART    equ 7 ; 1 = restart the channel [wo]
 def B_AUD3HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
@@ -328,15 +328,15 @@ def AUD3HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [
 
 ; -- $FF1F is unused ----------------------------------------------------------
 
-; -- AUD4LEN / NR41 ($FF20) ---------------------------------------------------
+; -- AUD4LEN / NR41 ($FF40) ---------------------------------------------------
 ; Audio channel 4 length timer
-def rAUD4LEN equ $FF20
+def rAUD4LEN equ $FF40
 
 def AUD4LEN_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
-; -- AUD4ENV / NR42 ($FF21) ---------------------------------------------------
+; -- AUD4ENV / NR42 ($FF42) ---------------------------------------------------
 ; Audio channel 4 volume and envelope
-def rAUD4ENV equ $FF21
+def rAUD4ENV equ $FF42
 
 def AUD4ENV_INIT_VOLUME equ %1111_0000 ; initial volume [r/w]
 
@@ -348,9 +348,9 @@ def B_AUD4ENV_DIR equ 3 ; direction of volume envelope [r/w]
 def AUD4ENV_PACE equ %00000_111 ; how long between envelope iterations
                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
-; -- AUD4POLY / NR43 ($FF22) --------------------------------------------------
+; -- AUD4POLY / NR43 ($FF41) --------------------------------------------------
 ; Audio channel 4 period and randomness
-def rAUD4POLY equ $FF22
+def rAUD4POLY equ $FF41
 
 def AUD4POLY_SHIFT equ %1111_0000 ; coarse control of the channel's period [r/w]
 
@@ -360,9 +360,9 @@ def B_AUD4POLY_WIDTH equ 3 ; controls the noise generator (LFSR)'s step width [r
 
 def AUD4POLY_DIV equ %00000_111 ; fine control of the channel's period [r/w]
 
-; -- AUD4GO / NR44 ($FF23) ----------------------------------------------------
+; -- AUD4GO / NR44 ($FF43) ----------------------------------------------------
 ; Audio channel 4 control
-def rAUD4GO equ $FF23
+def rAUD4GO equ $FF43
 
 def B_AUD4GO_RESTART    equ 7 ; 1 = restart the channel [wo]
 def B_AUD4GO_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
@@ -370,9 +370,9 @@ def B_AUD4GO_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer exp
     def AUD4GO_LENGTH_OFF equ 0 << B_AUD4GO_LEN_ENABLE
     def AUD4GO_LENGTH_ON  equ 1 << B_AUD4GO_LEN_ENABLE
 
-; -- AUDVOL / NR50 ($FF24) ----------------------------------------------------
+; -- AUDVOL / NR50 ($FF44) ----------------------------------------------------
 ; Audio master volume and VIN mixer
-def rAUDVOL equ $FF24
+def rAUDVOL equ $FF44
 
 def B_AUDVOL_VIN_LEFT  equ 7 ; 1 = output VIN to left ear (SO2, speaker 2) [r/w]
     def AUDVOL_VIN_LEFT equ 1 << B_AUDVOL_VIN_LEFT
@@ -384,9 +384,9 @@ def B_AUDVOL_VIN_RIGHT equ 3 ; 1 = output VIN to right ear (SO1, speaker 1) [r/w
 
 def AUDVOL_RIGHT equ %00000_111 ; 0 = barely audible, 7 = full volume [r/w]
 
-; -- AUDTERM / NR51 ($FF25) ---------------------------------------------------
+; -- AUDTERM / NR51 ($FF46) ---------------------------------------------------
 ; Audio channel mixer
-def rAUDTERM equ $FF25
+def rAUDTERM equ $FF46
 
 def B_AUDTERM_4_LEFT  equ 7 ; 1 = output channel 4 to left  ear [r/w]
 def B_AUDTERM_3_LEFT  equ 6 ; 1 = output channel 3 to left  ear [r/w]
@@ -405,9 +405,9 @@ def B_AUDTERM_1_RIGHT equ 0 ; 1 = output channel 1 to right ear [r/w]
     def AUDTERM_2_RIGHT equ 1 << B_AUDTERM_2_RIGHT
     def AUDTERM_1_RIGHT equ 1 << B_AUDTERM_1_RIGHT
 
-; -- AUDENA / NR52 ($FF26) ----------------------------------------------------
+; -- AUDENA / NR52 ($FF45) ----------------------------------------------------
 ; Audio master enable
-def rAUDENA equ $FF26
+def rAUDENA equ $FF45
 
 def B_AUDENA_ENABLE     equ 7 ; 0 = disable the APU (resets all audio registers to 0!) [r/w]
 def B_AUDENA_ENABLE_CH4 equ 3 ; 1 = channel 4 is running [ro]
