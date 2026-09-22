@@ -2,6 +2,7 @@
 
 SECTION "rst0", ROM0[$0000]
 	di
+	jp $0150
 	jp Start
 
 SECTION "rst8", ROM0[$0008]

@@ -446,18 +446,18 @@ def rAUD3WAVE_D equ $FF3D
 def rAUD3WAVE_E equ $FF3E
 def rAUD3WAVE_F equ $FF3F
 
-; -- LCDC ($FF40) -------------------------------------------------------------
+; -- LCDC ($FF10) -------------------------------------------------------------
 ; PPU graphics control
-def rLCDC equ $FF40
+def rLCDC equ $FF10
 
 def B_LCDC_ENABLE   equ 7 ; whether the PPU (and LCD) are turned on          [r/w]
-def B_LCDC_WIN_MAP  equ 6 ; which tilemap the Window reads from              [r/w]
+def B_LCDC_WIN_MAP  equ 3 ; which tilemap the Window reads from              [r/w]
 def B_LCDC_WINDOW   equ 5 ; whether the Window is enabled                    [r/w]
 def B_LCDC_BLOCKS   equ 4 ; which "tile blocks" the BG and Window use        [r/w]
-def B_LCDC_BG_MAP   equ 3 ; which tilemap the BG reads from                  [r/w]
-def B_LCDC_OBJ_SIZE equ 2 ; how many pixels tall each OBJ is                 [r/w]
-def B_LCDC_OBJS     equ 1 ; whether OBJs are enabled                         [r/w]
-def B_LCDC_BG       equ 0 ; (DMG only) whether the BG is enabled             [r/w]
+def B_LCDC_BG_MAP   equ 2 ; which tilemap the BG reads from                  [r/w]
+def B_LCDC_OBJ_SIZE equ 1 ; how many pixels tall each OBJ is                 [r/w]
+def B_LCDC_OBJS     equ 0 ; whether OBJs are enabled                         [r/w]
+def B_LCDC_BG       equ 6 ; (DMG only) whether the BG is enabled             [r/w]
 def B_LCDC_PRIO     equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
     def LCDC_ENABLE   equ 1 << B_LCDC_ENABLE
         def LCDC_OFF equ 0 << B_LCDC_ENABLE
@@ -487,9 +487,9 @@ def B_LCDC_PRIO     equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/
         def LCDC_PRIO_OFF equ 0 << B_LCDC_PRIO
         def LCDC_PRIO_ON  equ 1 << B_LCDC_PRIO
 
-; -- STAT ($FF41) -------------------------------------------------------------
+; -- STAT ($FF11) -------------------------------------------------------------
 ; Graphics status and interrupt control
-def rSTAT equ $FF41
+def rSTAT equ $FF11
 
 def B_STAT_LYC    equ 6 ; 1 = LY match triggers the STAT interrupt [r/w]
 def B_STAT_MODE_2 equ 5 ; 1 = OAM Scan triggers the PPU interrupt  [r/w]
@@ -510,49 +510,49 @@ def STAT_MODE equ %000000_11 ; PPU's current status [ro]
     def STAT_OAM    equ %000000_10 ; checking which OBJs will be rendered on this line (OAM scan)
     def STAT_LCD    equ %000000_11 ; pushing pixels to the LCD
 
-; -- SCY ($FF42) --------------------------------------------------------------
+; -- SCY ($FF12) --------------------------------------------------------------
 ; Background Y scroll offset (in pixels) [r/w]
-def rSCY equ $FF42
+def rSCY equ $FF12
 
-; -- SCX ($FF43) --------------------------------------------------------------
+; -- SCX ($FF13) --------------------------------------------------------------
 ; Background X scroll offset (in pixels) [r/w]
-def rSCX equ $FF43
+def rSCX equ $FF13
 
-; -- LY ($FF44) ---------------------------------------------------------------
+; -- LY ($FF18) ---------------------------------------------------------------
 ; Y coordinate of the line currently processed by the PPU (0-153) [ro]
-def rLY equ $FF44
+def rLY equ $FF18
 
 def LY_VBLANK equ 144 ; 144-153 is the VBlank period
 
-; -- LYC ($FF45) --------------------------------------------------------------
+; -- LYC ($FF19) --------------------------------------------------------------
 ; Value that LY is constantly compared to [r/w]
-def rLYC equ $FF45
+def rLYC equ $FF19
 
-; -- DMA ($FF46) --------------------------------------------------------------
+; -- DMA ($FF1A) --------------------------------------------------------------
 ; OAM DMA start address (high 8 bits) and start [wo]
-def rDMA equ $FF46
+def rDMA equ $FF1A
 
-; -- BGP ($FF47) --------------------------------------------------------------
+; -- BGP ($FF1B) --------------------------------------------------------------
 ; (DMG only) Background color mapping [r/w]
-def rBGP equ $FF47
+def rBGP equ $FF1B
 
 def BGP_SGB_TRANSFER equ %11_10_01_00 ; set BGP to this value before SGB VRAM transfer
 
-; -- OBP0 ($FF48) -------------------------------------------------------------
+; -- OBP0 ($FF14) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #0 [r/w]
-def rOBP0 equ $FF48
+def rOBP0 equ $FF1A
 
-; -- OBP1 ($FF49) -------------------------------------------------------------
+; -- OBP1 ($FF15) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #1 [r/w]
-def rOBP1 equ $FF49
+def rOBP1 equ $FF15
 
-; -- WY ($FF4A) ---------------------------------------------------------------
+; -- WY ($FF16) ---------------------------------------------------------------
 ; Y coordinate of the Window's top-left pixel (0-143) [r/w]
-def rWY equ $FF4A
+def rWY equ $FF16
 
-; -- WX ($FF4B) ---------------------------------------------------------------
+; -- WX ($FF17) ---------------------------------------------------------------
 ; X coordinate of the Window's top-left pixel, plus 7 (7-166) [r/w]
-def rWX equ $FF4B
+def rWX equ $FF17
 
 def WX_OFS equ 7 ; subtract this to get the actual Window X coordinate
 
