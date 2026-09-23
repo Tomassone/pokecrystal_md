@@ -1,9 +1,9 @@
 roms := \
-	pokecrystal.gbc \
-	pokecrystal11.gbc \
-	pokecrystal_au.gbc \
-	pokecrystal_debug.gbc \
-	pokecrystal11_debug.gbc
+	pokecrystal.mbc5 \
+	pokecrystal11.mbc5 \
+	pokecrystal_au.mbc5 \
+	pokecrystal_debug.mbc5 \
+	pokecrystal11_debug.mbc5
 patches := pokecrystal11.patch
 
 rom_obj := \
@@ -73,18 +73,18 @@ RGBGFXFLAGS  ?= -Weverything
 	tools
 
 all: crystal
-crystal:         pokecrystal.gbc
-crystal11:       pokecrystal11.gbc
-crystal_au:      pokecrystal_au.gbc
-crystal_debug:   pokecrystal_debug.gbc
-crystal11_debug: pokecrystal11_debug.gbc
+crystal:         pokecrystal.mbc5
+crystal11:       pokecrystal11.mbc5
+crystal_au:      pokecrystal_au.mbc5
+crystal_debug:   pokecrystal_debug.mbc5
+crystal11_debug: pokecrystal11_debug.mbc5
 crystal11_vc:    pokecrystal11.patch
 
 clean: tidy
 	find gfx \
 	     \( -name "*.[12]bpp" \
 	        -o -name "*.lz" \
-	        -o -name "*.gbcpal" \
+	        -o -name "*.mbc5pal" \
 	        -o -name "*.sgb.tilemap" \) \
 	     -delete
 	find gfx/pokemon -mindepth 1 \
@@ -97,10 +97,10 @@ clean: tidy
 
 tidy:
 	$(RM) $(roms) \
-	      $(roms:.gbc=.sym) \
-	      $(roms:.gbc=.map) \
+	      $(roms:.mbc5=.sym) \
+	      $(roms:.mbc5=.map) \
 	      $(patches) \
-	      $(patches:.patch=_vc.gbc) \
+	      $(patches:.patch=_vc.mbc5) \
 	      $(patches:.patch=_vc.sym) \
 	      $(patches:.patch=_vc.map) \
 	      $(patches:%.patch=vc/%.constants.sym) \
@@ -133,7 +133,7 @@ $(pokecrystal_debug_obj):   RGBASMFLAGS += -D _DEBUG
 $(pokecrystal11_debug_obj): RGBASMFLAGS += -D _CRYSTAL11 -D _DEBUG
 $(pokecrystal11_vc_obj):    RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL11_VC
 
-%.patch: %_vc.gbc %.gbc vc/%.patch.template
+%.patch: %_vc.mbc5 %.mbc5 vc/%.patch.template
 # Ignore the checksums added by tools/stadium at the end of the ROM
 	tools/make_patch --ignore 0x1ffde0:0x220 $*_vc.sym $^ $@
 
@@ -167,14 +167,14 @@ endif
 
 
 RGBFIXFLAGS += -Cjv -t PM_CRYSTAL -k 01 -l 0x33 -m MBC3+TIMER+RAM+BATTERY -r 3 -p 0
-pokecrystal.gbc:         RGBFIXFLAGS += -i BYTE -n 0
-pokecrystal11.gbc:       RGBFIXFLAGS += -i BYTE -n 1
-pokecrystal_au.gbc:      RGBFIXFLAGS += -i BYTU -n 0
-pokecrystal_debug.gbc:   RGBFIXFLAGS += -i BYTE -n 0
-pokecrystal11_debug.gbc: RGBFIXFLAGS += -i BYTE -n 1
-pokecrystal11_vc.gbc:    RGBFIXFLAGS += -i BYTE -n 1
+pokecrystal.mbc5:         RGBFIXFLAGS += -i BYTE -n 0
+pokecrystal11.mbc5:       RGBFIXFLAGS += -i BYTE -n 1
+pokecrystal_au.mbc5:      RGBFIXFLAGS += -i BYTU -n 0
+pokecrystal_debug.mbc5:   RGBFIXFLAGS += -i BYTE -n 0
+pokecrystal11_debug.mbc5: RGBFIXFLAGS += -i BYTE -n 1
+pokecrystal11_vc.mbc5:    RGBFIXFLAGS += -i BYTE -n 1
 
-%.gbc: $$(%_obj) layout.link
+%.mbc5: $$(%_obj) layout.link
 	$(RGBLINK) $(RGBLINKFLAGS) -l layout.link -n $*.sym -m $*.map -o $@ $(filter %.o,$^)
 	$(RGBFIX) $(RGBFIXFLAGS) $@
 	tools/stadium $@
@@ -224,28 +224,28 @@ gfx/pokemon/girafarig/front.animated.tilemap: gfx/pokemon/girafarig/front.2bpp g
 ### Pokemon and trainer sprite rules
 
 gfx/pokemon/%/back.2bpp: RGBGFXFLAGS += --columns
-gfx/pokemon/%/back.2bpp: gfx/pokemon/%/back.png gfx/pokemon/%/normal.gbcpal
+gfx/pokemon/%/back.2bpp: gfx/pokemon/%/back.png gfx/pokemon/%/normal.mbc5pal
 	$(RGBGFX) $(RGBGFXFLAGS) --colors gbc:$(word 2,$^) -o $@ $<
-gfx/pokemon/%/front.2bpp: gfx/pokemon/%/front.png gfx/pokemon/%/normal.gbcpal
+gfx/pokemon/%/front.2bpp: gfx/pokemon/%/front.png gfx/pokemon/%/normal.mbc5pal
 	$(RGBGFX) $(RGBGFXFLAGS) --colors gbc:$(word 2,$^) -o $@ $<
-gfx/pokemon/%/normal.gbcpal: gfx/pokemon/%/front.gbcpal gfx/pokemon/%/back.gbcpal
+gfx/pokemon/%/normal.mbc5pal: gfx/pokemon/%/front.mbc5pal gfx/pokemon/%/back.mbc5pal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
 gfx/trainers/%.2bpp: RGBGFXFLAGS += --columns
-gfx/trainers/%.2bpp: gfx/trainers/%.png gfx/trainers/%.gbcpal
+gfx/trainers/%.2bpp: gfx/trainers/%.png gfx/trainers/%.mbc5pal
 	$(RGBGFX) $(RGBGFXFLAGS) --colors gbc:$(word 2,$^) -o $@ $<
 
-# Egg does not have a back sprite, so it only uses front.gbcpal
-gfx/pokemon/egg/front.2bpp: gfx/pokemon/egg/front.png gfx/pokemon/egg/front.gbcpal
+# Egg does not have a back sprite, so it only uses front.mbc5pal
+gfx/pokemon/egg/front.2bpp: gfx/pokemon/egg/front.png gfx/pokemon/egg/front.mbc5pal
 gfx/pokemon/egg/front.2bpp: RGBGFXFLAGS += --colors gbc:$(word 2,$^)
 
-# Unown letters share one normal.gbcpal
+# Unown letters share one normal.mbc5pal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\
-	$(eval $(png:.png=.2bpp): $(png) gfx/pokemon/unown/normal.gbcpal))
+	$(eval $(png:.png=.2bpp): $(png) gfx/pokemon/unown/normal.mbc5pal))
 gfx/pokemon/unown_%/back.2bpp: RGBGFXFLAGS += --colors gbc:$(word 2,$^)
 gfx/pokemon/unown_%/front.2bpp: RGBGFXFLAGS += --colors gbc:$(word 2,$^)
-gfx/pokemon/unown/normal.gbcpal: $(subst .png,.gbcpal,$(unown_pngs))
+gfx/pokemon/unown/normal.mbc5pal: $(subst .png,.mbc5pal,$(unown_pngs))
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
 
@@ -253,16 +253,16 @@ gfx/pokemon/unown/normal.gbcpal: $(subst .png,.gbcpal,$(unown_pngs))
 
 gfx/pokemon/egg/unused_front.2bpp: RGBGFXFLAGS += --columns
 
-gfx/pokemon/spearow/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/fearow/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/farfetch_d/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/hitmonlee/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/scyther/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/jynx/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/porygon/normal.gbcpal: tools/gbcpal += --reverse
-gfx/pokemon/porygon2/normal.gbcpal: tools/gbcpal += --reverse
+gfx/pokemon/spearow/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/fearow/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/farfetch_d/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/hitmonlee/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/scyther/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/jynx/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/porygon/normal.mbc5pal: tools/gbcpal += --reverse
+gfx/pokemon/porygon2/normal.mbc5pal: tools/gbcpal += --reverse
 
-gfx/trainers/swimmer_m.gbcpal: tools/gbcpal += --reverse
+gfx/trainers/swimmer_m.mbc5pal: tools/gbcpal += --reverse
 
 gfx/new_game/shrink1.2bpp: RGBGFXFLAGS += --columns
 gfx/new_game/shrink2.2bpp: RGBGFXFLAGS += --columns
@@ -362,7 +362,7 @@ gfx/mobile/stadium2_n64.2bpp: tools/gfx += --trim-whitespace
 	$(if $(tools/gfx),\
 		tools/gfx $(tools/gfx) --depth 1 -o $@ $@ || $$($(RM) $@ && false))
 
-%.gbcpal: %.png
+%.mbc5pal: %.png
 	$(RGBGFX) -p $@ $<
 	tools/gbcpal $(tools/gbcpal) $@ $@ || $$($(RM) $@ && false)
 

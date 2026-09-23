@@ -19,15 +19,7 @@ Reset::
 	jr Init
 
 _Start::
-	cp BOOTUP_A_CGB
-	jr z, .cgb
-	xor a ; FALSE
-	jr .load
-
-.cgb
-	ld a, TRUE
-
-.load
+	xor a ; FALSE - force DMG mode on Mega Duck
 	ldh [hCGB], a
 	ld a, TRUE
 	ldh [hSystemBooted], a
@@ -54,6 +46,8 @@ Init::
 
 	ld a, %100 ; Start timer at 4096Hz
 	ldh [rTAC], a
+	ld a, $80
+    ldh [rLCDC], a
 
 .wait
 	ldh a, [rLY]

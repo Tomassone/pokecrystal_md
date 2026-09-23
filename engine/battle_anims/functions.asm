@@ -3417,7 +3417,7 @@ BattleAnimFunc_SkyAttack:
 	ldh a, [hSGB]
 	and a
 	jr nz, .sgb
-	ld hl, .GBCPals
+	ld hl, .mbc5Pals
 	jr .got_pals
 
 .sgb
@@ -3431,7 +3431,7 @@ BattleAnimFunc_SkyAttack:
 	ld [wOBP0], a
 	ret
 
-.GBCPals:
+.mbc5Pals:
 	db $ff, $aa, $55, $aa
 .SGBPals:
 	db $ff, $ff, $00, $00

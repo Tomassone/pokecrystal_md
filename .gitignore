@@ -5,7 +5,7 @@
 *.1bpp
 *.2bpp
 *.lz
-*.gbcpal
+*.mbc5pal
 *.dimensions
 *.animated.tilemap
 *.sgb.tilemap
@@ -15,7 +15,7 @@ gfx/pokemon/*/frames.asm
 !gfx/pokemon/unown/frames.asm
 
 # compiled roms
-*.gbc
+*.mbc5
 *.gb
 *.patch
 

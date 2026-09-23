@@ -145,13 +145,13 @@ git clone https://github.com/pret/pokecrystal
 cd pokecrystal
 ```
 
-To build **pokecrystal.gbc**:
+To build **pokecrystal.mbc5**:
 
 ```bash
 make
 ```
 
-To build **pokecrystal11.gbc**:
+To build **pokecrystal11.mbc5**:
 
 ```bash
 make crystal11

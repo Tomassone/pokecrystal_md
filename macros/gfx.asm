@@ -29,7 +29,7 @@ DEF tile  EQUS "+ TILE_SIZE *"
 
 ; extracts the middle two colors from a 2bpp binary palette
 ; example usage:
-; INCBIN "foo.gbcpal", middle_colors
+; INCBIN "foo.mbc5pal", middle_colors
 DEF middle_colors EQUS "COLOR_SIZE, COLOR_SIZE * 2"
 
 MACRO? dbpixel

@@ -540,7 +540,7 @@ def BGP_SGB_TRANSFER equ %11_10_01_00 ; set BGP to this value before SGB VRAM tr
 
 ; -- OBP0 ($FF14) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #0 [r/w]
-def rOBP0 equ $FF1A
+def rOBP0 equ $FF14
 
 ; -- OBP1 ($FF15) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #1 [r/w]
@@ -1005,10 +1005,10 @@ def OAM_SIZE  equ OBJ_SIZE * OAM_COUNT
 ; Audio channel RAM addresses
 ;******************************************************************************
 
-def AUD1RAM equ $FF10 ; $FF10-$FF14
-def AUD2RAM equ $FF15 ; $FF15-$FF19
-def AUD3RAM equ $FF1A ; $FF1A-$FF1E
-def AUD4RAM equ $FF1F ; $FF1F-$FF23
+def AUD1RAM equ $FF20 ; $FF10-$FF14
+def AUD2RAM equ $FF25 ; $FF15-$FF19
+def AUD3RAM equ $FF2A ; $FF1A-$FF1E
+def AUD4RAM equ $FF40 ; $FF1F-$FF23
 def AUDRAM_SIZE equ 5 ; size of each audio channel RAM in bytes
 
 def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F

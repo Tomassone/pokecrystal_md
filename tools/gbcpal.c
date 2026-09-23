@@ -1,5 +1,5 @@
 #define PROGRAM_NAME "gbcpal"
-#define USAGE_OPTS "[-h|--help] [-r|--reverse] out.gbcpal in.gbcpal..."
+#define USAGE_OPTS "[-h|--help] [-r|--reverse] out.mbc5pal in.mbc5pal..."
 
 #include "common.h"
 
